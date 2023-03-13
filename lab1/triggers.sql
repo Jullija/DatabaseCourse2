@@ -85,7 +85,7 @@ commit;
 
 
 
---STRUCTURE CHANGED -TODO
+--STRUCTURE CHANGED
 --trigger after adding reservation
 create or replace trigger AddReservationTrigger
     after insert on Reservation
@@ -94,8 +94,26 @@ create or replace trigger AddReservationTrigger
         insert into Log(reservation_id, log_date, status)
         values (:new.reservation_id, sysdate, :new.status);
 
-        update Trip set no_available_places = getAvailablePlaces(:old.trip_id)- 1
-        where trip_id = :old.trip_id;
+        update Trip set no_available_places = no_available_places - 1
+        where trip_id = :new.trip_id;
+
+    end;
+commit;
+
+
+create or replace trigger ModifyReservationStatusTrigger
+    after update of status on Reservation
+    for each row
+    begin
+        if :new.status != :old.status then
+            insert into Log(reservation_id, log_date, status)
+            values (:new.reservation_id, sysdate, :new.status);
+        end if;
+
+        if :new.status = 'C' then
+            update Trip set no_available_places = no_available_places + 1
+        where trip_id = :new.trip_id;
+        end if;
 
     end;
 commit;
@@ -128,7 +146,7 @@ commit;
 
 
 --trigger before changing reservation's status
-create or replace trigger BeforeChangingReservationStatus
+create or replace trigger BeforeChangingReservationStatusTrigger
     before update of status on Reservation
     for each row
     declare
@@ -160,3 +178,30 @@ create or replace trigger BeforeChangingReservationStatus
     end;
 commit;
 
+
+
+--trigger before changing max_places
+create or replace trigger BeforeChangingMaxPlacesTrigger
+    before update of max_no_places on Trip
+    for each row
+    declare
+        pragma autonomous_transaction;
+        availablePlaces int;
+    begin
+        availablePlaces := getAvailablePlaces(:new.trip_id);
+
+        if not tripExistence(:new.trip_id) then
+            raise_application_error(-20001, 'Trip with this id does not exist');
+        end if;
+
+        if :new.max_no_places <= 0 then
+            raise_application_error(-20001, 'Wrong number of mx places given');
+        end if;
+
+        if :old.max_no_places - availablePlaces > :new.max_no_places then
+            raise_application_error(-20001, 'The amount of booked places is greater than new max_no_places value.');
+        end if;
+
+
+    end;
+commit;

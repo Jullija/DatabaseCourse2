@@ -226,9 +226,46 @@ end;
 commit;
 
 
+--ModifyNoPlaces procedure
+create or replace procedure ModifyNoPlacesChanged(tripID int, noPlaces int)
+as
+begin
+    update Trip set max_no_places = noPlaces where tripID = trip_id;
+    begin
+        countAvailablePlaces(tripID);
+    end;
+end;
+
+commit;
+
+
+create or replace procedure ModifyReservationStatusChanged(reservationID int, newStatus char)
+as
+begin
+
+    if not reservationExistence(reservationID) then
+        raise_application_error(-20001, 'Reservation does not exist');
+    end if;
+
+    update Reservation set status=newStatus where reservation_id=reservationID;
+
+end;
+commit;
+
+
 
 
 begin
-    AddReservationChanged(3, 2);
+    AddReservationChanged(4, 7);
+end;
+commit;
+
+begin
+    ModifyNoPlacesChanged(1, 12);
+end;
+commit;
+
+begin
+    ModifyReservationStatusChanged(18, 'C');
 end;
 commit;
