@@ -24,7 +24,7 @@ commit;
 
 create view AvailableTrips
 as
-    select * from Trips
+    select country_name, tripDate, trip_name, trip_id, bookedPlaces, availablePlaces from Trips
     where availablePlaces > 0 and tripDate > SYSDATE;
 commit;
 
@@ -63,3 +63,7 @@ commit;
 select * from ReservationsViewChanged;
 select * from TripsViewChanged;
 select * from AvailableTripsViewChanged;
+
+select * from Trips;
+
+

@@ -14,17 +14,17 @@ values ('Czechy');
 
 -- trip
 
-insert into trip(trip_name, country_id, trip_date, max_no_places, no_available_places)
-values ('Ahoj przygodo', 1, to_date('2022-06-10','YYYY-MM-DD'), 10, 8);
+insert into trip(trip_name, country_id, trip_date, max_no_places)
+values ('Ahoj przygodo', 1, to_date('2022-06-10','YYYY-MM-DD'), 10);
 
-insert into trip(trip_name, country_id, trip_date,  max_no_places, no_available_places)
-values (N'Łoscypek', 1, to_date('2023-07-03','YYYY-MM-DD'), 4, 4);
+insert into trip(trip_name, country_id, trip_date,  max_no_places)
+values (N'Łoscypek', 1, to_date('2023-07-03','YYYY-MM-DD'), 4);
 
-insert into trip(trip_name, country_id, trip_date,  max_no_places, no_available_places)
-values (N'Żelipapą', 2, to_date('2023-05-01','YYYY-MM-DD'), 5, 4);
+insert into trip(trip_name, country_id, trip_date,  max_no_places)
+values (N'Żelipapą', 2, to_date('2023-05-01','YYYY-MM-DD'), 5);
 
-insert into trip(trip_name, country_id, trip_date,  max_no_places, no_available_places)
-values ('Krecik puka w taborecik', 3, to_date('2023-05-01','YYYY-MM-DD'), 2, 2);
+insert into trip(trip_name, country_id, trip_date,  max_no_places)
+values ('Krecik puka w taborecik', 3, to_date('2023-05-01','YYYY-MM-DD'), 2);
 
 
 
@@ -80,4 +80,13 @@ values (2, 4, 'C');
 insert into reservation(trip_id, person_id, status)
 values (3, 9, 'P');
 
+-- trip 4
+insert into reservation(trip_id, person_id, status)
+values (4, 10, 'P');
+
 commit;
+
+
+
+
+

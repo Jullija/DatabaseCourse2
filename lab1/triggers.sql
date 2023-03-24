@@ -1,4 +1,4 @@
---trigger after adding reservation - 7a)
+--trigger after adding reservation - 7a) --dodać procedurę
 create or replace trigger AddReservationTrigger
     after insert on Reservation
     for each row
@@ -46,6 +46,7 @@ create or replace trigger BeforeAddingReservationTrigger
         end if;
     end;
 commit;
+
 
 
 --trigger before changing reservation's status

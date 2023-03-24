@@ -75,6 +75,7 @@ add constraint log_fk1 foreign key
 
 
 
+
 --CHANGING THE STRUCTURE OF DATABASE - ADDING no_available_places
 
 create table trip

@@ -16,7 +16,7 @@ begin
 
     availablePlaces := getLeftPlaces(tripID);
 
-    if availablePlaces = 0 then
+    if availablePlaces <= 0 then
         raise_application_error(-20001, 'There are no spots for this trip');
     end if;
 
@@ -54,15 +54,15 @@ begin
         when currStatus then
         raise_application_error(-20001,'Reservation already has this status');
 
-        when 'N' then
-        raise_application_error(-20001, 'Cannot change status to NEW');
+--         when 'N' then
+--         raise_application_error(-20001, 'Cannot change status to NEW');
 
         when 'C' then
         null;
 
         when 'P' then
             if currStatus = 'C' then
-                if availablePlaces = 0 then
+                if availablePlaces <= 0 then
                     raise_application_error(-20001, 'Not enough places available');
                 end if;
             end if;
@@ -100,7 +100,7 @@ end;
 commit;
 
 
---LOG TABLE ADDED - PROCEDURE MODIFICATION
+--LOG TABLE ADDED - PROCEDURE MODIFICATION  --przejscia pomiędzy wszystkimi stanami są dozwolone
 create or replace procedure ModifyReservationStatusMod6(reservationID int, newStatus char)
 as
     availablePlaces int;
@@ -125,15 +125,15 @@ begin
         when currStatus then
         raise_application_error(-20001,'Reservation already has this status');
 
-        when 'N' then
-        raise_application_error(-20001, 'Cannot change status to NEW');
+--         when 'N' then
+--         raise_application_error(-20001, 'Cannot change status to NEW');
 
         when 'C' then
         null;
 
         when 'P' then
             if currStatus = 'C' then
-                if availablePlaces = 0 then
+                if availablePlaces <= 0 then
                     raise_application_error(-20001, 'Not enough places available');
                 end if;
             end if;
@@ -150,6 +150,44 @@ begin
 
 end;
 commit;
+
+
+create or replace procedure AddReservationMod6(tripID int, personID int)
+as
+    availablePlaces int;
+    reservationID int;
+begin
+    if not personExistence(personID) then
+        raise_application_error(-20001, 'Person does not exist');
+    end if;
+    if not tripExistence(tripID) then
+        raise_application_error(-20001, 'Trip does not exist');
+    end if;
+    if not isTheDateCorrect(tripID) then
+        raise_application_error(-20001, 'The trip has already taken place');
+    end if;
+
+
+    availablePlaces := getLeftPlaces(tripID);
+
+    if availablePlaces <= 0 then
+        raise_application_error(-20001, 'There are no spots for this trip');
+    end if;
+
+
+
+    insert into Reservation(trip_id, person_id, status)
+    values (tripID, personID, 'N');
+
+    select reservation_id into reservationID from Reservation where trip_id = tripID
+    and personID = person_id and status = 'N';
+
+    insert into Log(reservation_id, log_date, status) values
+    (reservationID, sysdate, 'N');
+end;
+commit;
+
+
 
 
 
@@ -183,15 +221,15 @@ commit;
 
 
 
-begin
-    AddReservationAfterTriggerMod(3, 1);
-end;
-commit;
-
-begin
-    ModifyReservationStatusAfterTriggerMod(47, 'P');
-end;
-commit;
+-- begin
+--     AddReservationAfterTriggerMod(3, 1);
+-- end;
+-- commit;
+--
+-- begin
+--     ModifyReservationStatusAfterTriggerMod(47, 'P');
+-- end;
+-- commit;
 
 
 
@@ -255,17 +293,18 @@ commit;
 
 
 
-begin
-    AddReservationChanged(4, 7);
-end;
-commit;
+-- begin
+--     AddReservation(3, 7);
+-- end;
+-- commit;
 
-begin
-    ModifyNoPlacesChanged(1, 12);
-end;
-commit;
-
-begin
-    ModifyReservationStatusChanged(18, 'C');
-end;
+--
+-- begin
+--     ModifyNoPlacesChanged(4, 1);
+-- end;
+-- commit;
+--
+-- begin
+--     ModifyReservationStatusChanged(18, 'C');
+-- end;
 commit;

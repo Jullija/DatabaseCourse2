@@ -6,7 +6,7 @@ as
     result int;
 begin
     select count(r.status) into result
-    from reservation r inner join trip t on r.trip_id = t.trip_id
+    from reservation r
     where r.trip_id = tripID and r.status != 'C';
 
     return result;
@@ -96,7 +96,37 @@ create or replace function isTheDateCorrect(tripID int, givenDate date default S
 as
     result date;
 begin
+
+
     if not tripExistence(tripID) then
+        raise_application_error(-2000, 'The trip does not exist');
+    end if;
+
+    select trip_date into result from trip where trip_id = tripID;
+
+    if givenDate >= result then --false when the trip has taken place earlier
+        return false;
+    else
+        return true;
+    end if;
+end;
+commit;
+
+
+create or replace function checkingConditions(tripID int, givenDate date default SYSDATE)
+    return boolean
+as
+    result date;
+    exist number;
+begin
+
+    select case
+        when exists(select * from trip where trip.trip_id = tripID) then 1
+        else 0
+    end
+    into exist from dual;
+
+    if exist = 0 then
         raise_application_error(-2000, 'The trip does not exist');
     end if;
 
