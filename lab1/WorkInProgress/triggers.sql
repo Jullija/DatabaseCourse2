@@ -206,3 +206,13 @@ create or replace trigger BeforeChangingMaxPlacesTrigger
 
     end;
 commit;
+
+
+create trigger DeleteReservationTrigger
+    before delete
+    on RESERVATION
+    for each row
+begin
+    raise_application_error(-20001, 'Cannot delete reservation');
+end;
+commit;
