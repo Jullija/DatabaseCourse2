@@ -4,22 +4,107 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Podaj nazwę produktu");
-            string prodName = Console.ReadLine();
-
-            Console.WriteLine("Poniżej lista produktów zarejestrowanych w naszej bazie danych");
+            bool goodDecision = false;
             ProductContext productContext = new ProductContext();
-            Product product = new Product { ProductName = prodName };
+
+            Console.WriteLine("Tworzenie nowego produktu:");
+            Product product = createNewProduct();
+
+
+
+            do
+            {
+                Console.WriteLine("Czy stworzyć nowego dostawcę i przypisać go do tego produktu? (tak/nie)");
+                string decision = Console.ReadLine();
+
+                switch (decision)
+                {
+                    case "tak":
+                        goodDecision = true;
+                        Console.WriteLine("Tworzenie nowego dostawcy:");
+                        Supplier supplier = createNewSupplier();
+                        productContext.Suppliers.Add(supplier);
+                        product.Supplier = supplier;
+                        break;
+
+                    case "nie":
+                        goodDecision = true;
+                        displaySuppliers(productContext);
+                        supplier = findSupplier(productContext);
+                        Console.WriteLine("Przypisanie podanego dostawcy do podanego produktu");
+                        product.Supplier = supplier;
+                        break;
+                }
+
+            } while (!goodDecision);
+
             productContext.Products.Add(product);
             productContext.SaveChanges();
 
-            var query = from prod in productContext.Products select prod.ProductName;
 
-            foreach(var pName in query)
+
+        }
+
+
+        private static Supplier createNewSupplier()
+        {
+            Console.WriteLine("Podaj nazwę dostawcy");
+            string suppName = Console.ReadLine();
+
+            Console.WriteLine("Podaj miasto dostawcy");
+            string suppCity = Console.ReadLine();
+
+            Console.WriteLine("Podaj ulicę dostawcy");
+            string suppStreet = Console.ReadLine();
+
+            Supplier supplier = new Supplier
             {
-                Console.WriteLine(pName);
-            }
+                CompanyName = suppName,
+                Street = suppStreet,
+                City = suppCity
+            };
 
+            return supplier;
+
+        }
+
+
+        private static Product createNewProduct()
+        {
+            Console.WriteLine("Podaj nazwę produktu");
+            string prodName = Console.ReadLine();
+
+            Console.WriteLine("Podaj liczbę sztuk produktu");
+            int quantity = Int32.Parse(Console.ReadLine());
+
+            Product product = new Product
+            {
+                ProductName = prodName,
+                UnitsOnStock = quantity
+            };
+
+            return product;
+
+        }
+
+
+        private static Supplier findSupplier(ProductContext productContext)
+        {
+            Console.WriteLine("Podaj id dostawcy, który ma być przypisany do nowego produktu.");
+            int id = Int32.Parse(Console.ReadLine());
+
+            var query = from supp in productContext.Suppliers where supp.SupplierID == id select supp;
+
+            return query.FirstOrDefault();
+        }
+
+        private static void displaySuppliers(ProductContext productContext)
+        {
+            Console.WriteLine("Oto wszyscy dostawcy:");
+            foreach(Supplier supp in productContext.Suppliers)
+            {
+                Console.WriteLine($"{ supp.SupplierID} { supp.CompanyName}");
+            }
         }
     }
 }
