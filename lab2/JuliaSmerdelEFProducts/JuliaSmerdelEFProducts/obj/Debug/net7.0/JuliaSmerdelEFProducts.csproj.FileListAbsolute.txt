@@ -59,5 +59,7 @@
 /Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/runtimes/win-arm64/native/e_sqlite3.dll
 /Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/runtimes/win-x86/native/e_sqlite3.dll
-/Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/Program.cs
+/Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/ProductContext.cs
 /Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/ProductsDatabase
+/Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/Program.cs
+/Users/juliasmerdel/Documents/semestr4/BazyDanych2/lab2/JuliaSmerdelEFProducts/JuliaSmerdelEFProducts/bin/Debug/net7.0/Invoice.cs

@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{06757A4B-08F6-452B-A37E-31C42CF9DAE0}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="JuliaSmerdelEFCompanies/Customer.cs">
+    <Files>
+      <File FileName="JuliaSmerdelEFCompanies/Program.cs" Line="189" Column="14" />
+      <File FileName="JuliaSmerdelEFCompanies/Supplier.cs" Line="9" Column="28" />
+      <File FileName="JuliaSmerdelEFCompanies/Customer.cs" Line="9" Column="28" />
+      <File FileName="JuliaSmerdelEFCompanies/Company.cs" Line="15" Column="1" />
+      <File FileName="JuliaSmerdelEFCompanies/CompanyContext.cs" Line="20" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="JuliaSmerdelEFCompanies" expanded="True">
+            <Node name="JuliaSmerdelEFCompanies" expanded="True">
+              <Node name="Migrations" expanded="True" />
+              <Node name="Customer.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State name="__root__">
+          <Node name="JuliaSmerdelEFCompanies" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.JuliaSmerdelEFCompanies PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

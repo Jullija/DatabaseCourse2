@@ -16,6 +16,37 @@ namespace JuliaSmerdelEFProducts.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
 
+            modelBuilder.Entity("JuliaSmerdelEFProducts.Invoice", b =>
+                {
+                    b.Property<int>("InvoiceNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("InvoiceNumber");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("JuliaSmerdelEFProducts.InvoiceInfo", b =>
+                {
+                    b.Property<int>("InvoiceNumber")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("InvoiceNumber", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("InvoiceInfos");
+                });
+
             modelBuilder.Entity("JuliaSmerdelEFProducts.Product", b =>
                 {
                     b.Property<int>("ProductID")
@@ -32,6 +63,35 @@ namespace JuliaSmerdelEFProducts.Migrations
                     b.HasKey("ProductID");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("JuliaSmerdelEFProducts.InvoiceInfo", b =>
+                {
+                    b.HasOne("JuliaSmerdelEFProducts.Invoice", "Invoice")
+                        .WithMany("InvoiceInfos")
+                        .HasForeignKey("InvoiceNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JuliaSmerdelEFProducts.Product", "Product")
+                        .WithMany("InvoiceInfos")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("JuliaSmerdelEFProducts.Invoice", b =>
+                {
+                    b.Navigation("InvoiceInfos");
+                });
+
+            modelBuilder.Entity("JuliaSmerdelEFProducts.Product", b =>
+                {
+                    b.Navigation("InvoiceInfos");
                 });
 #pragma warning restore 612, 618
         }
