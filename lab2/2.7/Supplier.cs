@@ -1,10 +1,13 @@
 ﻿using System;
-namespace JuliaSmerdelEFProducts
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace JuliaSmerdelEFCompanies
 {
-	public class Supplier : Company
-	{
-		public int SupplierID { get; set; }
-		public string bankAccountNumber { get; set; }
-	}
+    [Table("Suppliers")]
+    public class Supplier : Company
+    {
+        public int SupplierID { get; set; }
+        public string bankAccountNumber { get; set; }
+    }
 }
 
